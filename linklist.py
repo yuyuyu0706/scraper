@@ -10,12 +10,9 @@ def soup(driver):
     return soup
 
 if __name__ == '__main__':
-
     driver = webdriver.PhantomJS()
-
     for i in range(3, 9):
         driver.get(URL.format(i))
         s = soup(driver)
-
         for a in s.select(CSS):
             print(a)
