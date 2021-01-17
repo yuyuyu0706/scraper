@@ -1,10 +1,10 @@
 import tweepy
 import pandas as pd
 
-CK = 'oqPKhYzr8ZnZgrmjim7n7h7fL'
-CS = 'YtWYWxfkpZVgZv1gc5A0V1dDmtBH7m25mmO4JWKTYBmsUaQiRk'
-AT = '3314733386-PtMAw1ztrZtKALFRkxmFDRafjzXrr89iHLO6cKn'
-AS = 'FTbJ91vT6jCmEBTFXH2j1AU4IX3CI4oZs2YbMnVOGxPg0'
+CK = 'xxxxxx'
+CS = 'xxxxxx'
+AT = 'xxxxxx'
+AS = 'xxxxxx'
 
 # OAuth認証
 auth = tweepy.OAuthHandler(CK, CS)
