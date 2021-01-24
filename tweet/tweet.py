@@ -1,10 +1,10 @@
 import tweepy
 import pandas as pd
 
-CK = 'xxxx'
-CS = 'xxxx'
-AT = 'xxxx'
-AS = 'xxxx'
+CK = 'xxxxxxxxxxxxx'
+CS = 'xxxxxxxxxxxxx'
+AT = 'xxxxxxxxxxxxx'
+AS = 'xxxxxxxxxxxxx'
 
 # OAuth認証
 auth = tweepy.OAuthHandler(CK, CS)
@@ -33,7 +33,7 @@ for page in range(1,5):
 df_sum=pd.DataFrame(index=[], columns=['date','text'])
 
 # Tweet を取得する
-for page in range(3):
+for page in range(1,5):
 	results = api.user_timeline(
 		screen_name="hirosetakao",
 		count=200,
@@ -43,17 +43,19 @@ for page in range(3):
 	datelist=[]
 	textlist=[]
 
-	# 配列をデータフレーム化する
+	# データを配列に格納する
 	for i in range(200):
-		textlist.append(results[i].text)
 		datelist.append(results[i].created_at)
+		textlist.append(results[i].text)
 
 	# 配列をデータフレーム化する
-	df_text=pd.DataFrame(textlist,columns=['text'])
 	df_date=pd.DataFrame(datelist,columns=['date'])
+	df_text=pd.DataFrame(textlist,columns=['text'])
 
 	# データフレームを横連結する
 	df_temp=pd.concat([df_date, df_text], axis=1)
+
+	# データフレームを縦連結する
 	df_sum=pd.concat([df_sum, df_temp])
 
 # 表示する
@@ -61,6 +63,12 @@ for page in range(3):
 
 # 索引を振り直す
 df=df_sum.reset_index(drop=True)
+
+# データクレンジング - URLを消す
+df['text']=df['text'].str.replace("https?://[a-zA-Z0-9;/?:@&=\+$,\-_\.!~*`\(\)%#]+","")
+
+# データクレンジング - メンションを消す
+df['text']=df['text'].str.replace("@[a-zA-Z0-9]+","")
 
 # csv出力する
 df.to_csv("./tweet.csv", sep=',')
